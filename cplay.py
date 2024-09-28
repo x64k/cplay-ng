@@ -96,7 +96,8 @@ def get_socket(path):
 @functools.cache
 def get_mpv_version():
     p = subprocess.run(['mpv', '--version'], stdout=subprocess.PIPE)
-    s = p.stdout.split(b' ', 2)[1].decode()
+    vfilter = re.compile(r'[^\d.]+')
+    s = vfilter.sub('', p.stdout.split(b' ', 2)[1].decode())
     return tuple(int(i) for i in s.split('.'))
 
 
